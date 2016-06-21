@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Omnis Oculus</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_signup">Sign up</string>
+</resources>
