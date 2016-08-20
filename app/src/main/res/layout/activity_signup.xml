@@ -1,91 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollIndicators="none">
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="com.omnisoculus.Signup">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollIndicators="right">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:id="@+id/btnSignup"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editTextUsername"
-                android:layout_below="@+id/editTextName"
-                android:layout_centerHorizontal="true"
-                android:hint="Username" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextName"
+        android:hint="Name"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/btnSignup"
+        android:layout_centerHorizontal="true" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editTextName"
-                android:layout_marginTop="91dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:hint="Name" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextUsername"
+        android:hint="Username"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/editTextName"
+        android:layout_centerHorizontal="true" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/editTextPhone"
-                android:layout_below="@+id/editTextUsername"
-                android:layout_alignStart="@+id/editTextUsername"
-                android:hint="Phone" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextEmail"
+        android:hint="E-mail"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/editTextUsername"
+        android:layout_centerHorizontal="true" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:id="@+id/editTextEmail"
-                android:layout_below="@+id/editTextPhone"
-                android:layout_centerHorizontal="true"
-                android:hint="E-mail" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPassword"
+        android:hint="Password"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/editTextEmail"
+        android:layout_centerHorizontal="true" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign up"
-                android:id="@+id/btnSignup"
-                android:layout_below="@+id/editTextPassword2"
-                android:layout_centerHorizontal="true" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPassword2"
+        android:hint="Confirm password"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/editTextPassword"
+        android:layout_centerHorizontal="true" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/editTextPassword1"
-                android:layout_below="@+id/editTextEmail"
-                android:layout_centerHorizontal="true"
-                android:hint="Password" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/editTextPassword2"
-                android:layout_below="@+id/editTextPassword1"
-                android:layout_centerHorizontal="true"
-                android:hint="Re-enter password" />
-
-        </RelativeLayout>
-    </ScrollView>
 </RelativeLayout>
+</ScrollView>

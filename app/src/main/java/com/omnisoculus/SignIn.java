@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,8 @@ public class SignIn extends AppCompatActivity {
     private Button signIn, signOut;
     private EditText emailsin, passwordsin;
     private TextView signup;
+
+    private boolean loginiInfoValid = false;
 
 
     private static final String TAG = "EmailPassword";
@@ -87,14 +90,24 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
-                //uid = user.getUid();
+
                 if (user != null) {
                     // User is signed in
+                    uid = user.getUid();
+                    DatabaseReference mCurrentUser = mUsersRef.child(uid);
+                    String name = mCurrentUser.child("Name").getKey();
+                    loginiInfoValid = true;
+                    if(loginiInfoValid){
+
+                        String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                        mCurrentUser.child("Logged in").child("Last time logged in").setValue(mydate);
+                        mCurrentUser.child("Logged in").child("Logged in").setValue(true);
+                        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                        startActivity(intent);
+                    }
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Toast.makeText(getApplicationContext(), "Logged in as.",
-                            Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                    startActivity(intent);
+                    /*Toast.makeText(getApplicationContext(), "Welcome " + name,
+                            Toast.LENGTH_LONG).show();*/
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -119,10 +132,10 @@ public class SignIn extends AppCompatActivity {
                     break;
                 case R.id.btnSignin:
                     //Check wether the user exist int he database or not. Handle logic accordingly.
-                    Log.i("password:","Kommer hit");
                     email = emailsin.getText().toString();
                     password = passwordsin.getText().toString();
                     signIn(email, password);
+
                     break;
                 case R.id.btnSignout:
                     mAuth.signOut();

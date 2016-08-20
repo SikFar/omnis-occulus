@@ -2,4 +2,8 @@
     <string name="app_name">Omnis Oculus</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_signup">Sign up</string>
+    <string name="title_activity_friends">Friends</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search for a friend</string>
+    <string name="sign_up">Sign up</string>
 </resources>

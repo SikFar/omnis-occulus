@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<android.support.design.widget.CoordinatorLayout android:id="@+id/main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/tools">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -20,7 +23,41 @@
     android:layout_height="wrap_content"
     android:text="Sign out"
     android:id="@+id/btnSignout"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentStart="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:focusable="true" />
 
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_setting_dark"
+        fab:fab_colorNormal="#C2185B"
+        fab:fab_colorPressed="#FF4081"
+        fab:fab_colorRipple="#F06292"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:focusable="true"
+        android:focusableInTouchMode="false" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:src="@android:drawable/ic_menu_myplaces"
+        fab:fab_colorNormal="#C2185B"
+        fab:fab_colorPressed="#FF4081"
+        fab:fab_colorRipple="#F06292"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:focusable="true"
+        android:focusableInTouchMode="false" />
+
+
+</android.support.design.widget.CoordinatorLayout>

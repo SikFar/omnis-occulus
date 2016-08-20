@@ -15,10 +15,9 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editTextEmail"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="144dp"
-        android:hint="E-mail" />
+        android:hint="E-mail"
+        android:layout_above="@+id/editTextPasswordsin"
+        android:layout_alignStart="@+id/editTextPasswordsin" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,16 +25,16 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editTextPasswordsin"
-        android:layout_below="@+id/editTextEmail"
-        android:layout_centerHorizontal="true"
-        android:hint="Password" />
+        android:hint="Password"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/textViewInfo" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in"
         android:id="@+id/btnSignin"
-        android:layout_below="@+id/editTextPasswordsin"
+        android:layout_below="@+id/btnSignout"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -44,10 +43,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Sign up"
         android:id="@+id/textViewSignup"
-        android:layout_below="@+id/btnSignin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_below="@+id/textViewInfo"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,8 +54,7 @@
         android:text="Don&apos;t have an account?"
         android:id="@+id/textViewInfo"
         android:layout_below="@+id/btnSignin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"

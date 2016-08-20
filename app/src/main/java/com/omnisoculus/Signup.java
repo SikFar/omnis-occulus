@@ -23,24 +23,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Signup extends AppCompatActivity {
 
-    EditText etPhone, etUsername, etName, etEmail, etPassword1, etPassword2;
+    EditText etName, etEmail, etPassword1, etPassword2, etUsername;
     Button btnsignUp;
 
-    //private FirebaseAuth mAuth;
-    //private FirebaseAuth.AuthStateListener mAuthListener;
 
     private static final String TAG = "EmailPassword";
 
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
-    DatabaseReference mUsersRef = mRootRef.child("Users");
-    /*DatabaseReference mPasswordRef = mRootRef.child("Password");
-    DatabaseReference mEmailRef = mRootRef.child("Email");*/
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mUsersRef = mRootRef.child("Users");
+    private DatabaseReference mUsernamesRef = mRootRef.child("Usernames");
+    private DatabaseReference mLastKnownLocRef;
+    private DatabaseReference mLastKnownLatRef;// = mCurrentUserRef.child("Last known location");
+    private DatabaseReference mLastKnownLonRef;// = mCurrentUserRef.child("Last known location");
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -51,7 +51,7 @@ public class Signup extends AppCompatActivity {
     // [END declare_auth_listener]
     private ProgressDialog pd;
     private FirebaseUser user;
-    private String uid;
+    private String uid = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,16 +61,13 @@ public class Signup extends AppCompatActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("loading");
 
-        etPhone = (EditText)findViewById(R.id.editTextPhone);
-        etPhone.setOnClickListener(listener);
-
         etUsername = (EditText)findViewById(R.id.editTextUsername);
         etUsername.setOnClickListener(listener);
 
         etName = (EditText)findViewById(R.id.editTextName);
         etName.setOnClickListener(listener);
 
-        etPassword1 = (EditText)findViewById(R.id.editTextPassword1);
+        etPassword1 = (EditText)findViewById(R.id.editTextPassword);
         etPassword1.setOnClickListener(listener);
 
         etPassword2 = (EditText)findViewById(R.id.editTextPassword2);
@@ -92,14 +89,44 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
-                //uid = user.getUid();
+                String password1 = null,email = null,name = null, phone = null,password2;
+                password1 = etPassword1.getText().toString();
+                password2 = etPassword2.getText().toString();
+                email = etEmail.getText().toString();
+                name = etName.getText().toString();
+                String username = etUsername.getText().toString();
+
                 if (user != null) {
+                    uid = user.getUid();
                     // User is signed in
+                    mUsernamesRef.child(username).setValue(uid);
+                    DatabaseReference mUserRef = mUsersRef.child(uid);
+                        mUserRef.child("Username").setValue(username);
+                        mUserRef.child("Email").setValue(email);
+                        mUserRef.child("Password").setValue(password1);
+                        mUserRef.child("Name").setValue(name);
+                        mUserRef.child("UserID").setValue(uid);
+                        DatabaseReference mLoginInfoRef = mUserRef.child("Logged in");
+                            mLoginInfoRef.child("Last time logged in");
+                            mLoginInfoRef.child("Logged in").setValue(false);
+                        DatabaseReference mRequestsRef = mUserRef.child("Pending requests");
+                        DatabaseReference mFriendReqRef = mRequestsRef.child("Friend request");
+                        DatabaseReference mLocReqRef = mRequestsRef.child("Location request");
+                            DatabaseReference mObserveReqRef = mLocReqRef.child("Observe");
+                            DatabaseReference mObservedReqRef = mLocReqRef.child("Obeserved");
+                        DatabaseReference mFriendActivityRef = mUserRef.child("Friends locations");
+                        String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                        mUserRef.child("Date created").setValue(mydate);
+                        DatabaseReference mCurrentUserFriends = mUserRef.child("Friends");
+                        mLastKnownLocRef = mUserRef.child("Last known location");
+                            mLastKnownLatRef = mLastKnownLocRef.child("Latitude");
+                            mLastKnownLonRef = mLastKnownLocRef.child("Longitude");
+                        mUserRef.child("Last time loggend").setValue("");
                     Intent intentSignIn = new Intent(getApplicationContext(), SignIn.class);
                     startActivity(intentSignIn);
                     Toast.makeText(getApplicationContext(), "User created",
                             Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + uid);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -110,7 +137,6 @@ public class Signup extends AppCompatActivity {
             }
         };
         // [END auth_state_listener]
-
 
     }
 
@@ -186,49 +212,54 @@ public class Signup extends AppCompatActivity {
         return valid;
     }
 
+    boolean checkValiodation(){
+
+        String password1,email,name,password2;
+        password1 = etPassword1.getText().toString();
+        password2 = etPassword2.getText().toString();
+        email = etEmail.getText().toString();
+
+        name = etName.getText().toString();
+        boolean valid = true;
+        if (TextUtils.isEmpty(email)) {
+            etEmail.setError("Required.");
+            valid = false;
+        } else {
+            etEmail.setError(null);
+        }
+        if (TextUtils.isEmpty(password1)) {
+            etPassword1.setError("Required.");
+            valid = false;
+        } else {
+            etPassword1.setError(null);
+        }
+        if (TextUtils.isEmpty(password2)) {
+            etPassword2.setError("Required.");
+            valid = false;
+        } else {
+            etPassword2.setError(null);
+        }
+        if (TextUtils.isEmpty(name)) {
+            etName.setError("Required.");
+            valid = false;
+        } else {
+            etName.setError(null);
+        }
+        return valid;
+    }
+
     View.OnClickListener listener = new View.OnClickListener(){
         public void onClick(View v) {
-            String password1,email,username,name, phone,password2;
+            String password1,email, password2;
             switch (v.getId()) {
-                /*case R.id.editTextEmail:
-                    etEmail.getText().clear();
-                    break;
-                case R.id.editTextName:
-                    etName.getText().clear();
-                    break;
-                case R.id.editTextPhone:
-                    etPhone.getText().clear();
-                    break;
-                case R.id.editTextPassword1:
-
-                    break;
-                case R.id.editTextUsername:
-                    etUsername.getText().clear();
-                    break;*/
                 case R.id.btnSignup:
                     password1 = etPassword1.getText().toString();
                     password2 = etPassword2.getText().toString();
                     email = etEmail.getText().toString();
-                    username = etUsername.getText().toString();
-                    name = etName.getText().toString();
-                    phone = etPhone.getText().toString();
 
-                    if(password1.equals(password2)) {
-                        DatabaseReference mUserRef = mUsersRef.child(username
-                        );
-                        mUserRef.child("Email").setValue(email);
-                        mUserRef.child("Password").setValue(password1);
-                        mUserRef.child("Username").setValue(username);
-                        mUserRef.child("Name").setValue(name);
-                        mUserRef.child("Phone").setValue(phone);
-                        mUserRef.child("UserID").setValue(uid);
+                    if(checkValiodation() && password1.equals(password2)) {
+
                         createAccount(email, password1);
-
-                    }
-                    else{
-                        Toast t = Toast.makeText(getApplicationContext(),
-                                "Passwords did not match, trye again",Toast.LENGTH_LONG);
-                        t.show();
                     }
                     break;
             }
